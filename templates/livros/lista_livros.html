@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Livros do Prof. Miltinho{% endblock %}
+
+{% block content %}
+<h2 class="section-title text-center mb-4">
+  📚 Livros Recomendados
+</h2>
+
+<div class="container">
+  <div class="row">
+    {% for livro in livros %}
+      <div class="col-md-4 mb-4">
+        <div class="card h-100 livro-card">
+          {% if livro.imagem %}
+            <div class="livro-img-wrapper">
+              <img src="{{ livro.imagem.url }}" alt="{{ livro.titulo }}">
+            </div>
+          {% endif %}
+          <div class="card-body livro-conteudo mx-auto">
+            <h5 class="card-title text-center">{{ livro.titulo }}</h5>
+            <a href="{% url 'livro_detalhe' livro.pk %}" class="btn btn-warning btn-sm mt-2 d-inline-block">
+              📖 Leia mais
+            </a>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p class="text-center">Nenhum livro encontrado no momento.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

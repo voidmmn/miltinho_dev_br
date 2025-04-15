@@ -1,0 +1,145 @@
+/* style.css */
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+.livro-img {
+  max-height: 250px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.section-title {
+  color: #FFD700;
+  border-bottom: 2px solid #00B4D8;
+  margin-bottom: 1rem;
+}
+
+a.text-decoration-none:hover {
+  text-decoration: underline;
+}
+
+.livro-img-wrapper {
+    height: 180px;           /* Altura fixa */
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #0000000d;  /* fundo suave pra transições */
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+  }
+  
+  .livro-img-wrapper img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;   /* ou 'cover' se quiser preencher mais */
+  }
+
+  .card {
+    background-color: #1E2D3B; /* tom escuro elegante que combina com o navbar */
+    color: white;
+  }
+  
+  .card-body {
+    background-color: transparent;
+  }
+  
+  .btn-warning {
+    color: black;
+    font-weight: bold;
+  }
+
+  .card.livro-card {
+    background-color: #1E2D3B;
+    color: white;
+  }
+  
+  .carousel .carousel-item .col-md-6 {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .livro-conteudo {
+    max-width: 85%;  /* ou use 80% se quiser mais estreito */
+    text-align: justify;
+  }
+
+  .carousel-wrapper {
+    position: relative;
+  }
+  
+  .carousel-control-prev,
+  .carousel-control-next {
+    width: 5%; /* menor que o padrão */
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+  }
+  
+  .carousel-control-prev {
+    left: -40px; /* joga para fora do conteúdo */
+  }
+  
+  .carousel-control-next {
+    right: -40px;
+  }
+  
+  .post-card .card-title {
+    color: #00B4D8; /* tom clean e tecnológico */
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .carousel-item img {
+    max-height: 400px;
+    object-fit: cover;
+    margin: 0 auto;
+  }
+
+  .capa-livro {
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .capa-livro img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+  }
+  
+  /* Sidebar - título */
+.sidebar-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #FFD700;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Sidebar - ícone quadrado colorido */
+.sidebar-title::before {
+    content: "▣";
+    color: #00B4D8;
+    font-size: 1.1rem;
+}
+
+/* Sidebar - links */
+.sidebar-links li > a {
+  color: #f1c40f !important;
+  text-decoration: none;
+  font-size: 0.9rem;
+  display: block;
+  margin-bottom: 0.4rem;
+  transition: color 0.3s ease;
+}
+
+.sidebar-links li > a:hover {
+  color: #ffffff !important;
+  text-decoration: underline;
+}

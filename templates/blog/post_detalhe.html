@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ post.titulo }} - Blog do Prof. Miltinho{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h1 class="mb-3">{{ post.titulo }}</h1>
+  {% if post.imagem %}
+    <img src="{{ post.imagem.url }}" class="img-fluid mb-4" alt="{{ post.titulo }}">
+  {% endif %}
+  <div>
+    {{ post.conteudo|linebreaks }}
+  </div>
+  <hr>
+  <a href="/home/" class="btn btn-outline-light mt-4">← Voltar para a Home</a>
+</div>
+{% endblock %}

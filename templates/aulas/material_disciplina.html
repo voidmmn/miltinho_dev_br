@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 class="section-title">{{ disciplina.titulo }}</h2>
+<p>{{ disciplina.ementa }}</p>
+
+<div class="row">
+    {% for material in materiais %}
+        <div class="col-md-6 mb-3">
+            <div class="card h-100 livro-card">
+                {% if material.imagem %}
+                    <div class="capa-livro">
+                        <img src="{{ material.imagem.url }}" alt="{{ material.titulo }}">
+                    </div>
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ material.titulo }}</h5>
+                    <p class="card-text">{{ material.resumo }}</p>
+                    {% if material.arquivo %}
+                        <a href="{{ material.arquivo.url }}" target="_blank" class="btn btn-primary btn-sm">📎 Baixar</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block sidebar %}
+<h5 class="sidebar-title">📘 Disciplinas</h5>
+<ul class="list-unstyled sidebar-links">
+    {% for d in todas_disciplinas %}
+        <li>
+            <a href="{% url 'material_disciplina' d.pk %}" title="{{ d.titulo }}">
+                {{ d.titulo|truncatechars:26 }}
+            </a>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

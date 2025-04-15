@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}{{ livro.titulo }} - Detalhes{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-6">
+    {% if livro.imagem %}
+      <img src="{{ livro.imagem.url }}" class="img-fluid" alt="{{ livro.titulo }}">
+    {% endif %}
+  </div>
+  <div class="col-md-6">
+    <h2>{{ livro.titulo }}</h2>
+    <p>{{ livro.resumo }}</p>
+    <hr>
+    <p>{{ livro.descricao_detalhada|linebreaks }}</p>
+
+    {% if livro.link_compra %}
+      <div class="mt-4 p-3 bg-light text-dark border rounded">
+        <h5>{{ livro.texto_link_compra }}</h5>
+        <a href="https://a.co/d/guTy0dT" target="_blank">Clique aqui para adquirir</a>
+      </div>
+    {% endif %}
+  </div>
+</div>
+<a href="{% url 'lista_livros' %}" class="btn btn-outline-light mt-4">← Voltar para todos os livros</a>
+{% endblock %}

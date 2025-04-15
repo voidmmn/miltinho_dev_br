@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+
+{% block title %}Professor Miltinho{% endblock %}
+
+{% block content %}
+
+<h2 class="section-title">
+    📚 <a href="{% url 'lista_livros' %}" class="text-warning text-decoration-none">
+      Dicas de Livros
+    </a>
+</h2>
+<div class="container">
+    <div class="row">
+        <div class="carousel-wrapper position-relative">      
+                <div id="carouselLivros" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        {% for livro in livros %}
+                        {% if forloop.counter0|divisibleby:2 %}
+                            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                            <div class="row mx-5">
+                        {% endif %}
+
+                        <div class="col-md-6 mb-3">
+                            <div class="card h-100 livro-card post-card">
+                                {% if livro.imagem %}
+                                <div class="capa-livro">
+                                    <img src="{{ livro.imagem.url }}" alt="{{ livro.titulo }}">
+                                </div>
+                                {% endif %}
+                                <div class="card-body livro-conteudo mx-auto">
+                                <h5 class="card-title text-center">{{ livro.titulo }}</h5>
+                                <p class="card-text">{{ livro.resumo }}</p>
+                                <a href="{% url 'livro_detalhe' livro.pk %}" class="btn btn-warning btn-sm mt-2 d-inline-block">
+                                    📖 Leia mais
+                                </a>
+                                </div>
+                            </div>
+                        </div>
+                                
+                        {% if forloop.counter0|add:1|divisibleby:2 or forloop.last %}
+                            </div>
+                            </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselLivros" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Anterior</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselLivros" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Próximo</span>
+                    </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h2 class="section-title">🎓 Melhores Cursos</h2>
+<div class="row">
+    {% for curso in cursos %}
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <img src="{{ curso.imagem.url }}" class="card-img-top" alt="{{ curso.titulo }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ curso.titulo }}</h5>
+                    <p class="card-text">{{ curso.descricao|truncatechars:100 }}</p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<h2 class="section-title">
+    🖥️ <a href="/blog/" class="text-warning text-decoration-none">Últimos Posts</a>
+</h2>
+    <div class="row">
+        <div class="carousel-wrapper position-relative">
+            <div id="carouselPosts" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    {% for post in posts %}
+                    {% if forloop.counter0|divisibleby:2 %}
+                        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                        <div class="row mx-5">
+                    {% endif %}
+
+                    <div class="col-md-6 mb-3">
+                        <div class="card h-100 livro-card post-card">
+                        {% if post.imagem %}
+                            <div class="livro-img-wrapper">
+                            <img src="{{ post.imagem.url }}" alt="{{ post.titulo }}">
+                            </div>
+                        {% endif %}
+                        <div class="card-body livro-conteudo mx-auto">
+                            <h5 class="card-title">📝 {{ post.titulo }}</h5>
+                            <p class="card-text">{{ post.resumo }}</p>
+                            <a href="{% url 'post_detalhe' post.pk %}" class="btn btn-warning btn-sm mt-2 d-inline-block">
+                            📰 Ler post
+                            </a>
+                        </div>
+                        </div>
+                    </div>
+
+                    {% if forloop.counter0|add:1|divisibleby:2 or forloop.last %}
+                        </div>
+                        </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselPosts" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Anterior</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselPosts" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Próximo</span>
+                </button>
+            </div>
+        </div>
+    </div>
+  
+<h2 class="section-title">📁 Disciplinas</h2>
+<div class="row">
+    {% for disciplina in disciplinas %}
+        <div class="col-md-3 mb-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{ disciplina.nome }}</h5>
+                    <a href="/aulas/" class="btn btn-primary btn-sm mt-2">Ver Disciplinas</a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
+
+{% block sidebar %}
+<h5 class="sidebar-title">📘 Disciplinas</h5>
+<ul class="list-unstyled sidebar-links">
+    {% for d in todas_disciplinas %}
+        <li>
+            <a href="{% url 'material_disciplina' d.pk %}" title="{{ d.titulo }}">
+                {{ d.titulo|truncatechars:26 }}
+            </a>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}
+

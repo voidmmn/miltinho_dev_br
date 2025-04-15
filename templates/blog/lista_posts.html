@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Blog do Professor Miltinho{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2 class="section-title">🖥️ Todos os Posts</h2>
+  <div class="row">
+    {% for post in posts %}
+      <div class="col-md-4 mb-3">
+        <div class="card h-100 livro-card post-card">
+          {% if post.imagem %}
+            <div class="livro-img-wrapper">
+              <img src="{{ post.imagem.url }}" alt="{{ post.titulo }}">
+            </div>
+          {% endif %}
+          <div class="card-body livro-conteudo mx-auto">
+            <h5 class="card-title">{{ post.titulo }}</h5>
+            <p class="card-text">{{ post.resumo }}</p>
+            <a href="{% url 'post_detalhe' post.pk %}" class="btn btn-warning btn-sm mt-2 d-inline-block">
+              📰 Ler post
+            </a>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p>Nenhum post encontrado.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

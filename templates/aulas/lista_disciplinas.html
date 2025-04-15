@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Disciplinas - Blog do Professor Miltinho{% endblock %}
+
+{% block content %}
+<h2 class="section-title text-center mb-4">📘 Disciplinas</h2>
+
+<div class="row">
+    {% for disciplina in disciplinas %}
+        <div class="col-md-6 mb-4">
+            <div class="card h-100 livro-card">
+                {% if disciplina.imagem %}
+                    <div class="capa-livro">
+                        <img src="{{ disciplina.imagem.url }}" alt="{{ disciplina.titulo }}">
+                    </div>
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title text-center">{{ disciplina.titulo }}</h5>
+                    <p class="card-text text-center" style="font-size: 0.8rem;">{{ disciplina.ementa|truncatechars:300 }}</p>
+                    <a href="{% url 'material_disciplina' disciplina.pk %}" class="btn btn-primary btn-sm d-block mx-auto mt-2">📂 Ver Materiais</a>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <p class="text-center">Nenhuma disciplina cadastrada até o momento.</p>
+    {% endfor %}
+</div>
+{% endblock %}
