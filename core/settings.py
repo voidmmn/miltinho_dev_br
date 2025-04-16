@@ -21,13 +21,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-_x=b3!g44c)5ay$d6=_1dl#o+%=ln^vy4are02+b+5cy^ik0#&'
+#SECRET_KEY = 'django-insecure-_x=b3!g44c)5ay$d6=_1dl#o+%=ln^vy4are02+b+5cy^ik0#&'
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'chave-segura-default-em-dev')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["www.miltinho.dev.br", "miltinho.dev.br", "127.0.0.1", "localhost"]
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+CSRF_TRUSTED_ORIGINS = ['https://www.miltinho.dev.br', 'https://miltinho.dev.br']
+CSRF_COOKIE_SECURE = True      # Só envia por HTTPS
+SESSION_COOKIE_SECURE = True   # Só envia por HTTPS
+SECURE_SSL_REDIRECT = False
 
 # Application definition
 
@@ -79,13 +85,23 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('POSTGRES_DB', 'miltinho_db'),
+        'USER': os.environ.get('POSTGRES_USER', 'voidmmn'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD', 'bellatrix'),
+        'HOST': os.environ.get('POSTGRES_HOST', 'localhost'),
+        'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -132,11 +148,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #TEMPLATES[0]['DIRS'] = [BASE_DIR / 'templates']
 
 # Onde ficarão os arquivos estáticos
-STATIC_URL = 'static/'
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'templates/static'),)
-STATIC_ROOT = os.path.join('static')
-print("STATICFILES_DIRS:", STATICFILES_DIRS)
+#STATICFILES_DIRS = (os.path.join(BASE_DIR, 'templates/static'),)
+#STATIC_ROOT = os.path.join('static')
+
+STATIC_URL = '/static/'
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Onde ficarão os arquivos de mídia (uploads)
 MEDIA_URL = "/media/"
-MEDIA_ROOT = (os.path.join(BASE_DIR, 'media'))
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

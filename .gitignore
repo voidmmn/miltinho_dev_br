@@ -1,3 +1,9 @@
+#certbot
+certs/
+
+# SQLite database files
+*.sqlite3
+
 # Python
 *.pyc
 *.pyd

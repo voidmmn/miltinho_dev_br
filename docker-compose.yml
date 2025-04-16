@@ -1,0 +1,50 @@
+services:
+  db:
+    image: postgres:15
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=miltinho_db
+      - POSTGRES_USER=voidmmn
+      - POSTGRES_PASSWORD=bellatrix
+    restart: always
+
+  web:
+    build: .
+    container_name: miltinho_app
+    command: gunicorn core.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - .:/app
+      - ./staticfiles:/app/staticfiles
+      - ./media:/app/media      
+    expose:
+      - "8000"
+    environment:
+      - POSTGRES_DB=miltinho_db
+      - POSTGRES_USER=voidmmn
+      - POSTGRES_PASSWORD=bellatrix
+      - POSTGRES_HOST=db      
+      - DJANGO_SECRET_KEY=5e0=4uzntd#8=rc5eh@q&g1b&=o$b_nb+z2%3p1(4h&jy#8npr
+
+  nginx:
+    image: nginx:latest
+    container_name: miltinho_nginx
+    ports:
+      - "443:443"
+      - "80:80"
+      
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./certs/live:/etc/letsencrypt/live      
+      - ./staticfiles:/staticfiles  # <- Aqui garantimos que o Nginx enxerga!      
+      - ./media:/app/media
+#      - static_volume:/app/staticfiles
+#      - media_volume:/app/media      
+    
+    depends_on:
+      - web
+
+volumes:
+  postgres_data:
+#  static_volume:
+#  media_volume:  
